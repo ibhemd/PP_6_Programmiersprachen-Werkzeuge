@@ -10,6 +10,7 @@ public class Turtle {
     private boolean penDown;
     private Color color;
     private ArrayList<Line> lineList;
+    private ArrayList<Circle> circleList;
 
     public Turtle(int x, int y, int angle) {
         this.x = x;
@@ -18,6 +19,7 @@ public class Turtle {
         this.color = Color.BLACK;
         this.penDown = true;
         this.lineList = new ArrayList<>();
+        this.circleList = new ArrayList<>();
     }
 
     public void setPenDown(boolean penDown) {
@@ -37,6 +39,9 @@ public class Turtle {
         for (Line l : lineList) {
             l.paint(g);
         }
+        for (Circle c : circleList) {
+            c.paint(g);
+        }
     }
 
     public void moveTo(int x, int y) {
@@ -48,37 +53,7 @@ public class Turtle {
     }
 
     public void goForward(int step) {
-        /*int newX = 0, newY = 0;
-        if (viewWine%360 == 0) {
-            newY = this.y + step;
-        }
-        if (viewWine%360 == 45) {
-            newX = this.x + step;
-            newY = this.y + step;
-        }
-        if (viewWine%360 == 90) {
-            newX = this.x + step;
-        }
-        if (viewWine%360 == 135) {
-            newX = this.x + step;
-            newY = this.y - step;
-        }
-        if (viewWine%360 == 180) {
-            newY = this.y - step;
-        }
-        if (viewWine%360 == 225) {
-            newX = this.x - step;
-            newY = this.y - step;
-        }
-        if (viewWine%360 == 270) {
-            newX = this.x - step;
-        }
-        if (viewWine%360 == 315) {
-            newX = this.x - step;
-            newY = this.y + step;
-        }*/
-
-        double angleInRadian = angle * (Math.PI /180 );
+        double angleInRadian = angle * (Math.PI / 180);
         int newX = (int) (x + (step * Math.cos(angleInRadian)));
         int newY = (int) (y + (step * Math.sin(angleInRadian)));
 
@@ -89,11 +64,17 @@ public class Turtle {
         this.y = newY;
     }
 
+    public void drawCircle(int r) {
+        if (penDown) {
+            circleList.add(new Circle(this.x, this.y, r, this.color));
+        }
+    }
+
     public void interpret(String commands) {
         String[] z = commands.split("\n");
         for (String str : z) {
-            if (str.equals("pen up")) this.penDown = false;
-            if (str.equals("pen down")) this.penDown = true;
+            if (str.equals("pen up")) setPenDown(false);
+            if (str.equals("pen down")) setPenDown(true);
             if (str.startsWith("move")) {
                 String[] s = str.split(" ");
                 moveTo(Integer.parseInt(s[1]), Integer.parseInt(s[2]));
@@ -113,10 +94,12 @@ public class Turtle {
             }
             if (str.startsWith("color")) {
                 String[] s = str.split(" ");
-                System.out.println(s[1]);
                 setColor(Color.decode(s[1]));
+            }
+            if (str.startsWith("draw circle")) {
+                String[] s = str.split(" ");
+                drawCircle(Integer.parseInt(s[2]));
             }
         }
     }
-
 }

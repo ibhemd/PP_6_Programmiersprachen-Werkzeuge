@@ -20,7 +20,4 @@ public class Line {
         g.setColor(this.color);
         g.drawLine(startX, startY, endX, endY);
     }
-
-
-
 }

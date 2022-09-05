@@ -47,13 +47,11 @@ public class GUI extends JFrame {
         // make panel visible
         this.setVisible(true);
 
-        /*
         // test
-        paintArea.turtle.setPenDown(true);
+        /*paintArea.turtle.setPenDown(true);
         paintArea.turtle.goForward(20);
         paintArea.turtle.moveTo(105,505);
-        paintArea.turtle.moveTo(200,250);
-        */
+        paintArea.turtle.moveTo(200,250);*/
 
     }
 
